@@ -581,14 +581,35 @@ class ClientGUI(customtkinter.CTk):
         self.button_screen.configure(state="normal")
         self.button_mic.configure(state="normal")
 
+
+
+
+
     def start_camerastream(self):
         # Create a new thread to run the send_cam method in the background
         send_cam = threading.Thread(target=self.cam.send_cam)
         send_cam.start()
+
         # Create a new button to stop the camera stream, and place it on the GUI
         self.button_camera = customtkinter.CTkButton(master=self.frame, text="close camera",
                                                      command=self.stopcam, font=("calibri", 20, "normal"))
         self.button_camera.place(x=170, y=190)
+
+    def start_audiostream(self):
+        # Create a new thread to run the send_mic method in the background
+        send_mic = threading.Thread(target=self.mic.send_mic)
+        send_mic.start()
+
+
+        # Create a new button to stop the audio stream, and place it on the GUI
+        self.button_mic = customtkinter.CTkButton(master=self.frame, text="close mic", command=self.stopmic,
+                                                  font=("calibri", 20, "normal"))
+        self.button_mic.place(x=170, y=130)
+
+
+
+
+
 
     def start_screenshare(self):
         # Create a new thread to run the send_screen method in the background
@@ -598,15 +619,6 @@ class ClientGUI(customtkinter.CTk):
         self.button_screen = customtkinter.CTkButton(master=self.frame, text="close share-screen",
                                                      command=self.stopscreen, font=("calibri", 20, "normal"))
         self.button_screen.place(x=160, y=250)
-
-    def start_audiostream(self):
-        # Create a new thread to run the send_mic method in the background
-        send_mic = threading.Thread(target=self.mic.send_mic)
-        send_mic.start()
-        # Create a new button to stop the audio stream, and place it on the GUI
-        self.button_mic = customtkinter.CTkButton(master=self.frame, text="close mic", command=self.stopmic,
-                                                  font=("calibri", 20, "normal"))
-        self.button_mic.place(x=170, y=130)
 
     def stopcam(self):
         # Stop the camera stream
